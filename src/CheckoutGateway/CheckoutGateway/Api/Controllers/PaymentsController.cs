@@ -7,20 +7,32 @@ namespace CheckoutGateway.Api.Controllers;
 [ApiController]
 public class PaymentsController : ControllerBase
 {
+    /// <summary>
+    /// Returns a Payment by UUID
+    /// </summary>
+    /// <param name="id">Payment UUID</param>
+    /// <returns></returns>
     [HttpGet("{id}")]
-    public IActionResult GetPaymentByIdAsync(string id)
+    [ProducesResponseType(typeof(PaymentDto), StatusCodes.Status200OK)]
+    public IActionResult GetPaymentByIdAsync(Guid id)
     {
         return Ok("TODO");
     }
     
+    /// <summary>
+    /// Returns a list of merchant filtered payments
+    /// </summary>
+    /// <response code="200">List of merchant's requests</response>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<PaymentDto>), StatusCodes.Status200OK)]
     public IActionResult ListPaymentsAsync()
     {
         return Ok("TODO");
     }
     
     /// <summary>
-    /// Generates a payment in the gateway
+    /// Generates and processes a payment
     /// </summary>
     /// <param name="payment"></param>
     /// <remarks>
@@ -34,7 +46,7 @@ public class PaymentsController : ControllerBase
     ///     }
     ///
     /// </remarks>
-    /// <response code="201">Returns the processed payment request</response>
+    /// <response code="201">Processed payment response</response>
     /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(typeof(PaymentDto), StatusCodes.Status201Created)]
