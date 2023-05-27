@@ -5,7 +5,7 @@ namespace CheckoutGateway.WebApi.Controllers;
 
 [Route("api/payments")]
 [ApiController]
-public class PaymentsController : ControllerBase
+public class PaymentsController : BaseController
 {
     /// <summary>
     /// Returns a Payment by UUID
