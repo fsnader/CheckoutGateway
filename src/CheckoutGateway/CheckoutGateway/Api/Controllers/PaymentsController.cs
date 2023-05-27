@@ -31,6 +31,7 @@ public class PaymentsController : ControllerBase
         return Ok("TODO");
     }
     
+    
     /// <summary>
     /// Generates and processes a payment
     /// </summary>
@@ -38,11 +39,18 @@ public class PaymentsController : ControllerBase
     /// <remarks>
     /// Sample request:
     ///
-    ///     POST /api/payments
+    ///     POST /api/payments=
     ///     {
-    ///        "id": 1,
-    ///        "name": "Item #1",
-    ///        "isComplete": true
+    ///         "amount": 550,
+    ///         "currency": "USD",
+    ///         "card": {
+    ///             "name": "Felipe Nader",
+    ///             "number": "4141414141414141",
+    ///             "scheme": "VISA",
+    ///             "expirationMonth": 11,
+    ///             "expirationYear": 2025,
+    ///             "cvv": 999
+    ///         }
     ///     }
     ///
     /// </remarks>
