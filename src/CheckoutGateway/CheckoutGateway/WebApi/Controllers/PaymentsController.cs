@@ -1,7 +1,7 @@
 using CheckoutGateway.Api.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CheckoutGateway.Api.Controllers;
+namespace CheckoutGateway.WebApi.Controllers;
 
 [Route("api/payments")]
 [ApiController]
