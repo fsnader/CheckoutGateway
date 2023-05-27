@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using CheckoutGateway.Domain;
 
 namespace CheckoutGateway.Api.DTOs;
 
@@ -45,4 +46,15 @@ public class CardDetailsDto
     [Required]
     [Range(0, 999)]
     public int Cvv { get; set; }
+
+    public CreditCard ConvertToCreditCard() =>
+        new()
+        {
+            Name = Name,
+            Number = Number,
+            Scheme = Scheme,
+            ExpirationMonth = ExpirationMonth,
+            ExpirationYear = ExpirationYear,
+            Cvv = Cvv
+        };
 }

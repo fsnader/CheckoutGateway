@@ -32,4 +32,13 @@ public class CreatePaymentDto
     /// </summary>
     [Required]
     public CardDetailsDto Card { get; set; }
+    
+    public Payment ConvertToPayment() =>
+        new()
+        {
+            Amount = Amount,
+            Currency = Currency,
+            Status = Status,
+            Card = Card.ConvertToCreditCard()
+        };
 }

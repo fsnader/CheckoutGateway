@@ -33,4 +33,18 @@ public class PaymentDto
     /// Card scheme: Visa, Mastercard, Amex, etc
     /// </summary>
     public string CardScheme { get; set; }
+
+    public static PaymentDto CreateFromPayment(Payment payment) =>
+        new()
+        {
+            Id = payment.Id,
+            BankExternalId = payment.BankExternalId,
+            Amount = payment.Amount,
+            Currency = payment.Currency,
+            CardLastFourDigits = payment.Card.LastFourDigits,
+            CardScheme = payment.Card.Scheme
+        };
+
+    public static IEnumerable<PaymentDto> CreateFromCollection(IEnumerable<Payment> payments) =>
+        payments.Select(CreateFromPayment);
 }
