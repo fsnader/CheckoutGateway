@@ -2,10 +2,15 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using CheckoutGateway.Api.Middlewares;
 using CheckoutGateway.Application.UseCases;
+using CheckoutGateway.Infrastructure.Gateways;
+using CheckoutGateway.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<GlobalExceptionsMiddleware>();
+builder.Services.AddGateways();
+builder.Services.AddRepositories();
+builder.Services.AddRepositories();
 builder.Services.AddUseCases();
 
 builder.Services.AddLogging(config =>
