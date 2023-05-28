@@ -20,13 +20,7 @@ public class CreatePaymentDto
     [MinLength(3)]
     [MaxLength(3)]
     public string Currency { get; set; }
-    
-    /// <summary>
-    /// Payment Status: "Authorized", "Pending", "InProgress", "Declined" or "Processed"
-    /// </summary>
-    [Required]
-    public PaymentStatus Status { get; set; }
-    
+
     /// <summary>
     /// Credit Card information
     /// </summary>
@@ -38,7 +32,7 @@ public class CreatePaymentDto
         {
             Amount = Amount,
             Currency = Currency,
-            Status = Status,
+            Status = PaymentStatus.Created,
             Card = Card.ConvertToCreditCard()
         };
 }

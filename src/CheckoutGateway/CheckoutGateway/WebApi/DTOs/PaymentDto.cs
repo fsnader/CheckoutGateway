@@ -23,6 +23,11 @@ public class PaymentDto
     /// Payment ISO 4217 Currency code
     /// </summary>
     public string Currency { get; set; }
+    
+    /// <summary>
+    /// Payment Status
+    /// </summary>
+    public PaymentStatus Status { get; set; }
 
     /// <summary>
     /// Payment's card last four digits
@@ -41,6 +46,7 @@ public class PaymentDto
             BankExternalId = payment.BankExternalId,
             Amount = payment.Amount,
             Currency = payment.Currency,
+            Status = payment.Status,
             CardLastFourDigits = payment.Card.LastFourDigits,
             CardScheme = payment.Card.Scheme
         };

@@ -1,5 +1,4 @@
 using CheckoutGateway.Api.DTOs;
-using CheckoutGateway.Application.UseCases.OutputPorts;
 using CheckoutGateway.Application.UseCases.Payments;
 using Microsoft.AspNetCore.Mvc;
 

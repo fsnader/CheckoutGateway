@@ -2,8 +2,8 @@ namespace CheckoutGateway.Domain;
 
 public enum PaymentStatus
 {
+    Created,
     Authorized,
-    Pending,
     InProgress,
     Declined,
     Processed
