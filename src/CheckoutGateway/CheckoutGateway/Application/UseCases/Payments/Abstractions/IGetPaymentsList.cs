@@ -5,5 +5,5 @@ namespace CheckoutGateway.Application.UseCases.Payments.Abstractions;
 
 public interface IGetPaymentsList
 {
-    public Task<UseCaseResult<IEnumerable<Payment>>> ExecuteAsync(CancellationToken cancellationToken);
+    public Task<UseCaseResult<IEnumerable<Payment>>> ExecuteAsync(Guid merchantId, CancellationToken cancellationToken);
 }

@@ -1,13 +1,23 @@
 using CheckoutGateway.Application.UseCases.OutputPorts;
 using CheckoutGateway.Application.UseCases.Payments.Abstractions;
 using CheckoutGateway.Domain;
+using CheckoutGateway.Infrastructure.Repositories.Abstractions;
 
 namespace CheckoutGateway.Application.UseCases.Payments;
 
 public class GetPaymentsList : IGetPaymentsList
 {
-    public Task<UseCaseResult<IEnumerable<Payment>>> ExecuteAsync(CancellationToken cancellationToken)
+    private readonly IPaymentsRepository _paymentsRepository;
+
+    public GetPaymentsList(IPaymentsRepository paymentsRepository)
     {
-        throw new NotImplementedException();
+        _paymentsRepository = paymentsRepository;
+    }
+    
+    public async Task<UseCaseResult<IEnumerable<Payment>>> ExecuteAsync(Guid merchantId, CancellationToken cancellationToken)
+    {
+        var payments = await _paymentsRepository.ListByMerchantIdAsync(merchantId, cancellationToken);
+        
+        return UseCaseResult<IEnumerable<Payment>>.Success(payments);
     }
 }

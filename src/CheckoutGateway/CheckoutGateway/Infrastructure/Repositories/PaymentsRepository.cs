@@ -14,4 +14,14 @@ public class PaymentsRepository : IPaymentsRepository
     {
         throw new NotImplementedException();
     }
+
+    public Task<Payment?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IEnumerable<Payment>> ListByMerchantIdAsync(Guid merchantId, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }
