@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using CheckoutGateway.Domain;
 
-namespace CheckoutGateway.Api.DTOs;
+namespace CheckoutGateway.WebApi.DTOs;
 
 public class CardDetailsDto
 {

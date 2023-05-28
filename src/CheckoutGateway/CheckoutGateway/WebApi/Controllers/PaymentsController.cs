@@ -1,6 +1,5 @@
-using CheckoutGateway.Api.DTOs;
-using CheckoutGateway.Application.UseCases.Payments;
 using CheckoutGateway.Application.UseCases.Payments.Abstractions;
+using CheckoutGateway.WebApi.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CheckoutGateway.WebApi.Controllers;
@@ -83,7 +82,7 @@ public class PaymentsController : BaseController
     public async Task<IActionResult> CreatePaymentAsync([FromBody]CreatePaymentDto payment, CancellationToken cancellationToken)
     {
         var result = await _createPayment.ExecuteAsync(
-            payment.ConvertToPayment(), 
+            payment.ConvertToPayment(Guid.Empty), 
             cancellationToken);
         
         return UseCaseActionResult(result, PaymentDto.CreateFromPayment);

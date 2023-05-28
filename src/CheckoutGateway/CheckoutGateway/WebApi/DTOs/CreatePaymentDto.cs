@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using CheckoutGateway.Domain;
 
-namespace CheckoutGateway.Api.DTOs;
+namespace CheckoutGateway.WebApi.DTOs;
 
 public class CreatePaymentDto
 {
@@ -26,9 +26,10 @@ public class CreatePaymentDto
     [Required]
     public CardDetailsDto Card { get; set; }
     
-    public Payment ConvertToPayment() =>
+    public Payment ConvertToPayment(Guid merchantId) =>
         new()
         {
+            MerchantId = merchantId,
             Amount = Amount,
             Currency = Currency,
             Status = PaymentStatus.Created,
