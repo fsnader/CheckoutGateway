@@ -1,13 +1,54 @@
 using CheckoutGateway.Application.UseCases.OutputPorts;
 using CheckoutGateway.Application.UseCases.Payments.Abstractions;
 using CheckoutGateway.Domain;
+using CheckoutGateway.Infrastructure.Gateways;
+using CheckoutGateway.Infrastructure.Repositories.Abstractions;
 
 namespace CheckoutGateway.Application.UseCases.Payments;
 
 public class CreatePayment : ICreatePayment
 {
-    public Task<UseCaseResult<Payment>> ExecuteAsync(Payment payment, CancellationToken cancellationToken)
+    private readonly IBankGateway _bankGateway;
+    private readonly ICreditCardRepository _creditCardRepository;
+    private readonly IPaymentsRepository _paymentsRepository;
+
+    public CreatePayment(
+        IBankGateway bankGateway,
+        ICreditCardRepository creditCardRepository,
+        IPaymentsRepository paymentsRepository)
     {
-        throw new NotImplementedException();
+        _bankGateway = bankGateway;
+        _creditCardRepository = creditCardRepository;
+        _paymentsRepository = paymentsRepository;
+    }
+    
+    public async Task<UseCaseResult<Payment>> ExecuteAsync(Payment payment, CancellationToken cancellationToken)
+    {
+        if (!IsInputValid(payment))
+        {
+            // TODO: Use FluentValidator
+            return UseCaseResult<Payment>.BadRequest("Invalid parameters");
+        }
+        
+        // TODO: Idempotency validation
+        
+        var createdPayment = await _paymentsRepository.CreateAsync(payment);
+        await _creditCardRepository.CreateAsync(createdPayment.Id, payment.Card, cancellationToken);
+        
+        var result = await _bankGateway.ProcessPaymentAsync(payment, cancellationToken);
+
+        if (result.Success)
+        {
+            await createdPayment.UpdateToProcessed(_paymentsRepository);
+            return UseCaseResult<Payment>.Success(createdPayment);
+        }
+
+        await createdPayment.UpdateToDeclined(result.Error!, _paymentsRepository);
+        return UseCaseResult<Payment>.Rejected(result.Error!);
+    }
+
+    private bool IsInputValid(Payment payment)
+    {
+        return true;
     }
 }

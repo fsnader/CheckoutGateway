@@ -4,5 +4,5 @@ public enum ErrorType
 {
     NotFound,
     BadRequest,
-    Unauthorized,
+    Rejected,
 }

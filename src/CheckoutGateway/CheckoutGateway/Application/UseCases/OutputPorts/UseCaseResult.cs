@@ -27,6 +27,6 @@ public class UseCaseResult<T>
     public static UseCaseResult<T> BadRequest(string errorMessage = "Please provide all required fields") =>
         new UseCaseResult<T>(ErrorType.BadRequest, errorMessage);
 
-    public static UseCaseResult<T> Unauthorized(string errorMessage = "Unauthorized") =>
-        new UseCaseResult<T>(ErrorType.Unauthorized, errorMessage);
+    public static UseCaseResult<T> Rejected(string errorMessage = "Rejected") =>
+        new UseCaseResult<T>(ErrorType.Rejected, errorMessage);
 }

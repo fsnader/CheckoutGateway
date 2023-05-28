@@ -5,23 +5,18 @@ namespace CheckoutGateway.WebApi.Controllers;
 
 public class BaseController : ControllerBase
 {
-    protected IActionResult ErrorResult<T>(UseCaseResult<T> result) =>
+    private IActionResult ErrorResult<T>(UseCaseResult<T> result) =>
         result.Error switch
         {
             ErrorType.NotFound => NotFound(result.ErrorMessage),
             ErrorType.BadRequest => BadRequest(result.ErrorMessage),
-            ErrorType.Unauthorized => Unauthorized(result.ErrorMessage),
+            ErrorType.Rejected => StatusCode(StatusCodes.Status406NotAcceptable, result.ErrorMessage),
             _ => StatusCode(StatusCodes.Status500InternalServerError)
         };
 
     protected IActionResult UseCaseActionResult<T, TOutput>(UseCaseResult<T> result,
-        Func<T, TOutput> converter)
-    {
-        if (result.Result is null)
-        {
-            return ErrorResult(result);
-        }
-
-        return Ok(converter(result.Result));
-    }
+        Func<T, TOutput> converter) =>
+        result.Result is null 
+            ? ErrorResult(result) 
+            : Ok(converter(result.Result));
 }
