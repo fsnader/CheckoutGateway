@@ -14,13 +14,16 @@ public class Payment
 
     private async Task UpdateStatus(PaymentStatus status, string reason, IPaymentsRepository repository)
     {
-        await repository.UpdatePaymentStatusAsync(this, status, reason);
         Status = status;
+        await repository.UpdatePaymentAsync(this, reason);
     }
 
     public async Task UpdateToDeclined(string reason, IPaymentsRepository repository)
         => await UpdateStatus(PaymentStatus.Declined, reason, repository);
     
-    public async Task UpdateToProcessed(IPaymentsRepository repository)
-        => await UpdateStatus(PaymentStatus.Processed, "Payment processed", repository);
+    public async Task UpdateToProcessed(Guid bankExternalId, IPaymentsRepository repository)
+    {
+        BankExternalId = bankExternalId;
+        await UpdateStatus(PaymentStatus.Processed, "Payment processed", repository);
+    }
 }

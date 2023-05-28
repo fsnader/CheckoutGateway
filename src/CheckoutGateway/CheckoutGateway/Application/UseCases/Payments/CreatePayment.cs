@@ -39,8 +39,7 @@ public class CreatePayment : ICreatePayment
 
         if (result.Success)
         {
-            // TODO: Set BankExternalId
-            await createdPayment.UpdateToProcessed(_paymentsRepository);
+            await createdPayment.UpdateToProcessed(result.Id, _paymentsRepository);
             return UseCaseResult<Payment>.Success(createdPayment);
         }
 

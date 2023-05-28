@@ -10,7 +10,7 @@ public class PaymentsRepository : IPaymentsRepository
         throw new NotImplementedException();
     }
 
-    public Task UpdatePaymentStatusAsync(Payment createdPayment, PaymentStatus status, string reason)
+    public Task UpdatePaymentAsync(Payment createdPayment, string reason)
     {
         throw new NotImplementedException();
     }
