@@ -1,6 +1,6 @@
 using CheckoutGateway.Domain;
 
-namespace CheckoutGateway.Infrastructure.Gateways;
+namespace CheckoutGateway.Infrastructure.Gateways.Abstractions;
 
 public interface IBankGateway
 {

@@ -1,4 +1,5 @@
 using CheckoutGateway.Domain;
+using CheckoutGateway.Infrastructure.Gateways.Abstractions;
 
 namespace CheckoutGateway.Infrastructure.Gateways;
 

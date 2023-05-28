@@ -1,3 +1,5 @@
+using CheckoutGateway.Infrastructure.Gateways.Abstractions;
+
 namespace CheckoutGateway.Infrastructure.Gateways;
 
 public static class Installers
