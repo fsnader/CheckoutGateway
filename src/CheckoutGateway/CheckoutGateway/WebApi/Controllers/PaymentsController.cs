@@ -1,5 +1,6 @@
 using CheckoutGateway.Api.DTOs;
 using CheckoutGateway.Application.UseCases.Payments;
+using CheckoutGateway.Application.UseCases.Payments.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CheckoutGateway.WebApi.Controllers;
@@ -9,16 +10,16 @@ namespace CheckoutGateway.WebApi.Controllers;
 public class PaymentsController : BaseController
 {
     private readonly IGetPaymentById _getPaymentById;
-    private readonly IGetPaymentList _getPaymentList;
+    private readonly IGetPaymentsList _getPaymentsList;
     private readonly ICreatePayment _createPayment;
 
     public PaymentsController(
         IGetPaymentById getPaymentById,
-        IGetPaymentList getPaymentList,
+        IGetPaymentsList getPaymentsList,
         ICreatePayment createPayment)
     {
         _getPaymentById = getPaymentById;
-        _getPaymentList = getPaymentList;
+        _getPaymentsList = getPaymentsList;
         _createPayment = createPayment;
     }
 
@@ -46,7 +47,7 @@ public class PaymentsController : BaseController
     [ProducesResponseType(typeof(IEnumerable<PaymentDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListPaymentsAsync(CancellationToken cancellationToken)
     {
-        var result = await _getPaymentList.ExecuteAsync(cancellationToken);
+        var result = await _getPaymentsList.ExecuteAsync(cancellationToken);
 
         return UseCaseActionResult(result, PaymentDto.CreateFromCollection);
     }

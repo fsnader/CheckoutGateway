@@ -1,7 +1,7 @@
 using CheckoutGateway.Application.UseCases.OutputPorts;
 using CheckoutGateway.Domain;
 
-namespace CheckoutGateway.Application.UseCases.Payments;
+namespace CheckoutGateway.Application.UseCases.Payments.Abstractions;
 
 public interface IGetPaymentById
 {
