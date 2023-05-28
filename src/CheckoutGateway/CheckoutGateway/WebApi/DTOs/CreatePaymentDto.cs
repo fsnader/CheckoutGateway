@@ -10,7 +10,6 @@ public class CreatePaymentDto
     /// </summary>
     [Required]
     [Range(0.01, double.MaxValue)]
-    [RegularExpression(@"^\d+(\.\d{1,2})?$")]
     public decimal Amount { get; set; }
     
     /// <summary>
