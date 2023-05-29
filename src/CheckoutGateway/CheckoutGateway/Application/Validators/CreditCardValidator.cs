@@ -22,7 +22,7 @@ public class CreditCardValidator : AbstractValidator<CreditCard>
             .InclusiveBetween(1, 12);
         
         RuleFor(c => c.ExpirationYear)
-            .GreaterThan(DateTime.Now.Year);
+            .GreaterThanOrEqualTo(DateTime.Now.Year);
         
         RuleFor(c => c.Cvv).NotEmpty()
             .InclusiveBetween(1, 999);
