@@ -65,7 +65,7 @@ OutputPots: Abstractions that represent the result of a use case. The main class
 This is the layer that keeps the implementation details of the domain abstractions. In this application, mostly of this is related to data access (repositories) and external integrations (gateways).
 
 ##### Gateways
-Includes the BankGateway implementation. This class emulates the connection between the gateway and the Bank.
+Includes the BankGateway implementation. This class emulates the connection between the gateway and the Bank. For this project, we're using just a mock class that returns dummy results, but for a real project, it probably would implement a service integration through queues, REST APIs, GRPc, or any other communication protocol.
 
 ##### Database
 Includes abstractions and classes related to Postgres data access. 
