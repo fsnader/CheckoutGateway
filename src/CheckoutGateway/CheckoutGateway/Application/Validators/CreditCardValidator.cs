@@ -15,8 +15,7 @@ public class CreditCardValidator : AbstractValidator<CreditCard>
             .CreditCard();
         
         RuleFor(c => c.Scheme)
-            .NotEmpty()
-            .Length(3);
+            .NotEmpty();
         
         RuleFor(c => c.ExpirationMonth)
             .InclusiveBetween(1, 12);

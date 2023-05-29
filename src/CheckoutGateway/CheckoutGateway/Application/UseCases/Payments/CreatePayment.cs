@@ -28,10 +28,8 @@ public class CreatePayment : ICreatePayment
         
         if (!validationResult.IsValid)
         {
-            return UseCaseResult<Payment>.BadRequest(validationResult.ToString());
+            return UseCaseResult<Payment>.BadRequest(validationResult.ToString(","));
         }
-        
-        // TODO: Idempotency validation
         
         var createdPayment = await _paymentsRepository.CreateAsync(payment, cancellationToken);
         
