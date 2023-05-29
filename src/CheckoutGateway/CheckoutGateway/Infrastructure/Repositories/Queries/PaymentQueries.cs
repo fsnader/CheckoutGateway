@@ -37,6 +37,6 @@ public static class PaymentQueries
             card_scheme as scheme,
             card_expiration_month as month, 
             card_expiration_year as year, 
-            card_cvv cvv
+            card_cvv as cvv
 ";
 }
