@@ -9,16 +9,13 @@ namespace CheckoutGateway.Application.UseCases.Payments;
 public class CreatePayment : ICreatePayment
 {
     private readonly IBankGateway _bankGateway;
-    private readonly ICreditCardRepository _creditCardRepository;
     private readonly IPaymentsRepository _paymentsRepository;
 
     public CreatePayment(
         IBankGateway bankGateway,
-        ICreditCardRepository creditCardRepository,
         IPaymentsRepository paymentsRepository)
     {
         _bankGateway = bankGateway;
-        _creditCardRepository = creditCardRepository;
         _paymentsRepository = paymentsRepository;
     }
     
