@@ -2,6 +2,7 @@ using CheckoutGateway.Application.UseCases.OutputPorts;
 using CheckoutGateway.Application.UseCases.Payments.Abstractions;
 using CheckoutGateway.Domain;
 using CheckoutGateway.Domain.Abstractions;
+using FluentValidation;
 
 namespace CheckoutGateway.Application.UseCases.Payments;
 
@@ -9,21 +10,25 @@ public class CreatePayment : ICreatePayment
 {
     private readonly IBankGateway _bankGateway;
     private readonly IPaymentsRepository _paymentsRepository;
+    private readonly IValidator<Payment> _validator;
 
     public CreatePayment(
         IBankGateway bankGateway,
-        IPaymentsRepository paymentsRepository)
+        IPaymentsRepository paymentsRepository,
+        IValidator<Payment> validator)
     {
         _bankGateway = bankGateway;
         _paymentsRepository = paymentsRepository;
+        _validator = validator;
     }
     
     public async Task<UseCaseResult<Payment>> ExecuteAsync(Payment payment, CancellationToken cancellationToken)
     {
-        if (!IsInputValid(payment))
+        var validationResult = await _validator.ValidateAsync(payment, cancellationToken);
+        
+        if (!validationResult.IsValid)
         {
-            // TODO: Use FluentValidator
-            return UseCaseResult<Payment>.BadRequest("Invalid parameters");
+            return UseCaseResult<Payment>.BadRequest(validationResult.ToString());
         }
         
         // TODO: Idempotency validation
