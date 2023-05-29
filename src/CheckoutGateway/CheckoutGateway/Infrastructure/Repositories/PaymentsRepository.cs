@@ -17,11 +17,7 @@ public class PaymentsRepository : IPaymentsRepository
         return await _queryExecutor.ExecuteQueryAsync(async connection =>
         {
             var result = await connection.QueryAsync<Payment, CreditCard, Payment>(PaymentQueries.CreatePayment,
-                (p, c) =>
-                {
-                    p.Card = c;
-                    return p;
-                },
+                MapPaymentAndCreditCard,
                 new
                 {
                     payment.MerchantId,
@@ -34,9 +30,9 @@ public class PaymentsRepository : IPaymentsRepository
                     CardExpirationMonth = payment.Card.ExpirationMonth,
                     CardExpirationYear = payment.Card.ExpirationYear,
                     CardCvv = payment.Card.Cvv
-                }, splitOn: "card_name");
+                }, splitOn: "name");
 
-            return result.FirstOrDefault() ?? new Payment();
+            return result.FirstOrDefault()!;
         }, cancellationToken);
     }
 
@@ -52,5 +48,11 @@ public class PaymentsRepository : IPaymentsRepository
     public async Task<IEnumerable<Payment>> ListByMerchantIdAsync(Guid merchantId, CancellationToken cancellationToken)
     {
         return Array.Empty<Payment>();
+    }
+
+    private static Payment MapPaymentAndCreditCard(Payment p, CreditCard c)
+    {
+        p.Card = c;
+        return p;
     }
 }

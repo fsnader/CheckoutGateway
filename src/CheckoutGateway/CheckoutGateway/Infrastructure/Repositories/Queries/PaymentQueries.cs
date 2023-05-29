@@ -25,6 +25,18 @@ public static class PaymentQueries
              @CardExpirationMonth, 
              @CardExpirationYear, 
              @CardCvv)
-        RETURNING *;
+        RETURNING 
+            id, 
+            merchant_id,
+            bank_external_id, 
+            amount, 
+            currency, 
+            status,
+            card_name as name, 
+            card_number as number, 
+            card_scheme as scheme,
+            card_expiration_month as month, 
+            card_expiration_year as year, 
+            card_cvv cvv
 ";
 }
