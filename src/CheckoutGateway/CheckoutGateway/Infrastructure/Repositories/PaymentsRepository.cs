@@ -12,11 +12,10 @@ public class PaymentsRepository : IPaymentsRepository
 
     public PaymentsRepository(IQueryExecutor queryExecutor) => _queryExecutor = queryExecutor;
 
-    public async Task<Payment> CreateAsync(Payment payment, CancellationToken cancellationToken)
-    {
-        return await _queryExecutor.ExecuteQueryAsync(async connection =>
+    public async Task<Payment> CreateAsync(Payment payment, CancellationToken cancellationToken) =>
+        await _queryExecutor.ExecuteQueryAsync(async connection =>
         {
-            var result = await connection.QueryAsync<Payment, CreditCard, Payment>(PaymentQueries.CreatePayment,
+            var result = await connection.QueryAsync<Payment, CreditCard, Payment>(PaymentQueries.Create,
                 MapPaymentAndCreditCard,
                 new
                 {
@@ -34,21 +33,29 @@ public class PaymentsRepository : IPaymentsRepository
 
             return result.FirstOrDefault()!;
         }, cancellationToken);
-    }
 
     public async Task UpdatePaymentAsync(Payment createdPayment, string reason, CancellationToken cancellationToken)
     {
     }
 
-    public async Task<Payment?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
-    {
-        return null;
-    }
+    public async Task<Payment?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
+        await _queryExecutor.ExecuteQueryAsync(async connection =>
+        {
+            var result = await connection.QueryAsync<Payment, CreditCard, Payment>(
+                PaymentQueries.GetById,
+                MapPaymentAndCreditCard,
+                new { Id = id }, splitOn: "name");
 
-    public async Task<IEnumerable<Payment>> ListByMerchantIdAsync(Guid merchantId, CancellationToken cancellationToken)
-    {
-        return Array.Empty<Payment>();
-    }
+            return result.SingleOrDefault();
+        }, cancellationToken);
+
+    public async Task<IEnumerable<Payment>>
+        ListByMerchantIdAsync(Guid merchantId, CancellationToken cancellationToken) =>
+        await _queryExecutor.ExecuteQueryAsync(async connection =>
+            await connection.QueryAsync<Payment, CreditCard, Payment>(
+                PaymentQueries.ListByMerchantId,
+                MapPaymentAndCreditCard,
+                new { MerchantId = merchantId }, splitOn: "name"), cancellationToken);
 
     private static Payment MapPaymentAndCreditCard(Payment p, CreditCard c)
     {

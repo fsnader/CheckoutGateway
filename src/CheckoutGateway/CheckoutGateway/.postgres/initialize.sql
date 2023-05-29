@@ -3,7 +3,7 @@ create extension if not exists "uuid-ossp";
 CREATE TABLE merchant
 (
     id        uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
-    name      text NOT NULL,
+    name      text NOT NULL UNIQUE,
     client_id text NOT NULL,
     secret_id text NOT NULL
 );

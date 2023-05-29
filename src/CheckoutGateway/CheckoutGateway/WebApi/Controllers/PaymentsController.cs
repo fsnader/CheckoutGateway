@@ -33,7 +33,7 @@ public class PaymentsController : BaseController
     [ProducesResponseType(typeof(PaymentDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPaymentByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _getPaymentById.ExecuteAsync(id, Guid.Empty, cancellationToken);
+        var result = await _getPaymentById.ExecuteAsync(id, Guid.Parse("65813c39-48f3-408a-9404-63bb0525a56c"), cancellationToken);
         return UseCaseActionResult(result, PaymentDto.CreateFromPayment);
     }
     
@@ -46,7 +46,7 @@ public class PaymentsController : BaseController
     [ProducesResponseType(typeof(IEnumerable<PaymentDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListPaymentsAsync(CancellationToken cancellationToken)
     {
-        var result = await _getPaymentsList.ExecuteAsync(Guid.Empty, cancellationToken);
+        var result = await _getPaymentsList.ExecuteAsync(Guid.Parse("65813c39-48f3-408a-9404-63bb0525a56c"), cancellationToken);
 
         return UseCaseActionResult(result, PaymentDto.CreateFromCollection);
     }
