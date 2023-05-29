@@ -35,10 +35,24 @@ Users must include an Authorization header with a JWT token to access protected 
 - `POST /api/auth/signup`: Allows merchants to sign up and create a new account. This endpoints require a merchant name and a client_id, and will generate the secret_id that is required to login.
 - `POST /api/auth/login`: Receives a client_id and a secret_id, and returns a token that can be used to access the payments endpoints.
 
+![img.png](docs/token.png?raw=true)
+
+To use the received token on Swagger, it's necessary to copy the received token, click on the "Authorize" button and add the token in the input, in the format "Bearer ${token}":
+
+![img.png](docs/authorize.png?raw=true)
+### Endpoints
+
+The application consists on three main API endpoints:
+- `POST /api/payments`: Receives a payment request (containing the amount, currency and credit card details), validates it, sends it to the payment gateway and keeps the database updated accordingly.
+- `GET /api/payments`: List all payments for a specific merchant.
+- `GET /api/payments/{id}`: Retrieves a specific payment by its id. It only returns the payment if its from the merchant that is performing the request.
+
 ## Architecture
 
 ### Solution organization
 This project tries to follow some Clean Architecture patterns to keep the domain and the business logic isolated from implementation details, making it technology agnostic and easily testable.
+
+![Clean architecture](docs/clean-architecture.png?raw=true)
 
 In a bigger project, the application layers would be kept in different projects (and .dlls), but as this system has only a few use cases, I intentionally decided to organize it using folders:
 #### Domain Layer
