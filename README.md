@@ -81,6 +81,7 @@ The only dependency of this layer is the domain layer.
   - GetPaymentById: Gets a payment for a provided Id and MerchantId
   - GetPaymentsList: Lists all the payments for a specific merchant
 OutputPots: Abstractions that represent the result of a use case. The main class here is the UseCaseResult, that is a generic envelope that encapsulates the response of a UseCase to simplify success and error.
+Validators: FluentValidation input validators
 
 ![Application Layer](docs/application.png?raw=true)
 
