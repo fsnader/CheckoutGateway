@@ -1,4 +1,5 @@
 using CheckoutGateway.Application.UseCases.Payments.Abstractions;
+using CheckoutGateway.WebApi.Authentication;
 using CheckoutGateway.WebApi.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +13,17 @@ public class PaymentsController : BaseController
     private readonly IGetPaymentById _getPaymentById;
     private readonly IGetPaymentsList _getPaymentsList;
     private readonly ICreatePayment _createPayment;
+    private readonly IAuthenticationService _authenticationService;
 
     public PaymentsController(
         IGetPaymentById getPaymentById,
         IGetPaymentsList getPaymentsList,
-        ICreatePayment createPayment)
+        ICreatePayment createPayment, IAuthenticationService authenticationService)
     {
         _getPaymentById = getPaymentById;
         _getPaymentsList = getPaymentsList;
         _createPayment = createPayment;
+        _authenticationService = authenticationService;
     }
     
     /// <summary>
@@ -33,7 +36,10 @@ public class PaymentsController : BaseController
     [ProducesResponseType(typeof(PaymentDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetPaymentByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var result = await _getPaymentById.ExecuteAsync(id, Guid.Parse("65813c39-48f3-408a-9404-63bb0525a56c"), cancellationToken);
+        var merchantId = _authenticationService.GetCurrentMerchantId();
+        if (merchantId is null) return Unauthorized();
+        
+        var result = await _getPaymentById.ExecuteAsync(id, merchantId.Value, cancellationToken);
         return UseCaseActionResult(result, PaymentDto.CreateFromPayment);
     }
     
@@ -46,7 +52,10 @@ public class PaymentsController : BaseController
     [ProducesResponseType(typeof(IEnumerable<PaymentDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ListPaymentsAsync(CancellationToken cancellationToken)
     {
-        var result = await _getPaymentsList.ExecuteAsync(Guid.Parse("65813c39-48f3-408a-9404-63bb0525a56c"), cancellationToken);
+        var merchantId = _authenticationService.GetCurrentMerchantId();
+        if (merchantId is null) return Unauthorized();
+        
+        var result = await _getPaymentsList.ExecuteAsync(merchantId.Value, cancellationToken);
 
         return UseCaseActionResult(result, PaymentDto.CreateFromCollection);
     }
@@ -75,14 +84,17 @@ public class PaymentsController : BaseController
     ///     }
     /// 
     /// </remarks>
-    /// <response code="201">Processed payment response</response>
+    /// <response code="200">Processed payment response</response>
     /// <returns></returns>
     [HttpPost]
-    [ProducesResponseType(typeof(PaymentDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(PaymentDto), StatusCodes.Status200OK)]
     public async Task<IActionResult> CreatePaymentAsync([FromBody]CreatePaymentDto payment, CancellationToken cancellationToken)
     {
+        var merchantId = _authenticationService.GetCurrentMerchantId();
+        if (merchantId is null) return Unauthorized();
+        
         var result = await _createPayment.ExecuteAsync(
-            payment.ConvertToPayment(Guid.Parse("65813c39-48f3-408a-9404-63bb0525a56c")), 
+            payment.ConvertToPayment(merchantId.Value), 
             cancellationToken);
         
         return UseCaseActionResult(result, PaymentDto.CreateFromPayment);
