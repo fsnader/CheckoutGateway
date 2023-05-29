@@ -40,13 +40,51 @@ Users must include an Authorization header with a JWT token to access protected 
 ### Solution organization
 This project tries to follow some Clean Architecture patterns to keep the domain and the business logic isolated from implementation details, making it technology agnostic and easily testable.
 
-The solution is divided in the following layers
+In a bigger project, the application layers would be kept in different projects (and .dlls), but as this system has only a few use cases, I intentionally decided to organize it using folders:
+#### Domain Layer
 
+This is the core domain layer, where entities and abstraction interfaces are defined. This layer doesn't have any dependency on specific technology, and contain the most stable components.
 
-### Data Access
+![Domain Layer](docs/domain.png?raw=true)
 
-### BankGateway
+#### Application Layer
+This is the layer that keeps application use cases. Each use case represents a business case and contain a single responsibility.
+The only dependency of this layer is the domain layer.
+
+- Merchants:
+  - CreateMerchant: Creates a merchant, generating a client_id and a secret_id to be used for login
+- Payments:
+  - CreatePayment: Creates a payment on the database, sends it to the bank gateway and processes the response.
+  - GetPaymentById: Gets a payment for a provided Id and MerchantId
+  - GetPaymentsList: Lists all the payments for a specific merchant
+OutputPots: Abstractions that represent the result of a use case. The main class here is the UseCaseResult, that is a generic envelope that encapsulates the response of a UseCase to simplify success and error.
+
+![Application Layer](docs/application.png?raw=true)
+
+#### Infrastructure
+This is the layer that keeps the implementation details of the domain abstractions. In this application, mostly of this is related to data access (repositories) and external integrations (gateways).
+
+##### Gateways
+Includes the BankGateway implementation. This class emulates the connection between the gateway and the Bank.
+
+##### Database
+Includes abstractions and classes related to Postgres data access. 
+
+For this project, Dapper is being used to access the database. This MicroORM increases the initial effort of doing CRUD operations, but give much more control and safety for the developer, specially for more complex queries.
+
+##### Repositories
+Includes the repositories implementations to access Merchant and Payment entities.
+
+![img.png](docs/infrastructure.png?raw=true)
+
+#### WebApi
+This is the layer that keeps the implementation details of the presentation layer (API Controllers) of our app, and components that only make sense on this layer (Authentication and Middlewares).
+
+This layer also includes DTOs that are the API contracts. These contracts usually differ from the domain because they are use case specific and hide sensitive domain information from the end user.
+
+![img_1.png](docs/webapi.png?raw=true)
 
 ## Unit Tests
+TODO
 
 ## Possible Improvements
