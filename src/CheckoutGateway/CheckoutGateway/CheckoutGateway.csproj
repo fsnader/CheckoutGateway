@@ -24,5 +24,9 @@
     <ItemGroup>
       <Content Include=".postgres\initialize.sql" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Application\UseCases\Merchants" />
+    </ItemGroup>
 
 </Project>
