@@ -1,4 +1,5 @@
 using System.Data;
+using CheckoutGateway.Infrastructure.Database.Abstractions;
 using Npgsql;
 
 namespace CheckoutGateway.Infrastructure.Database;

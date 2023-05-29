@@ -1,3 +1,5 @@
+using CheckoutGateway.Infrastructure.Database.Abstractions;
+
 namespace CheckoutGateway.Infrastructure.Database;
 
 public static class Installer

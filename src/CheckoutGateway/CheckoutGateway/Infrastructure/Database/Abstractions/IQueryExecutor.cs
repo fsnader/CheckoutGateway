@@ -1,6 +1,6 @@
 using System.Data;
 
-namespace CheckoutGateway.Infrastructure.Database;
+namespace CheckoutGateway.Infrastructure.Database.Abstractions;
 
 public interface IQueryExecutor
 {
