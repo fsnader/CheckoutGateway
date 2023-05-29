@@ -12,18 +12,18 @@ public class Payment
     public PaymentStatus Status { get; set; }
     public CreditCard Card { get; set; }
 
-    private async Task UpdateStatus(PaymentStatus status, string reason, IPaymentsRepository repository)
+    private async Task UpdateStatus(PaymentStatus status, string reason, IPaymentsRepository repository, CancellationToken cancellationToken)
     {
         Status = status;
-        await repository.UpdatePaymentAsync(this, reason);
+        await repository.UpdatePaymentAsync(this, reason, cancellationToken);
     }
 
-    public async Task UpdateToDeclined(string reason, IPaymentsRepository repository)
-        => await UpdateStatus(PaymentStatus.Declined, reason, repository);
+    public async Task UpdateToDeclined(string reason, IPaymentsRepository repository, CancellationToken cancellationToken)
+        => await UpdateStatus(PaymentStatus.Declined, reason, repository, cancellationToken);
     
-    public async Task UpdateToProcessed(Guid bankExternalId, IPaymentsRepository repository)
+    public async Task UpdateToProcessed(Guid bankExternalId, IPaymentsRepository repository, CancellationToken cancellationToken)
     {
         BankExternalId = bankExternalId;
-        await UpdateStatus(PaymentStatus.Processed, "Payment processed", repository);
+        await UpdateStatus(PaymentStatus.Processed, "Payment processed", repository, cancellationToken);
     }
 }

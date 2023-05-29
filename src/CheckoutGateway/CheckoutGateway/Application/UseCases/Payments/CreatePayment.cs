@@ -29,18 +29,17 @@ public class CreatePayment : ICreatePayment
         
         // TODO: Idempotency validation
         
-        var createdPayment = await _paymentsRepository.CreateAsync(payment);
-        // await _creditCardRepository.CreateAsync(createdPayment.Id, payment.Card, cancellationToken);
+        var createdPayment = await _paymentsRepository.CreateAsync(payment, cancellationToken);
         
         var result = await _bankGateway.ProcessPaymentAsync(payment, cancellationToken);
 
         if (result.Success)
         {
-            await createdPayment.UpdateToProcessed(result.Id, _paymentsRepository);
+            await createdPayment.UpdateToProcessed(result.Id, _paymentsRepository, cancellationToken);
             return UseCaseResult<Payment>.Success(createdPayment);
         }
 
-        await createdPayment.UpdateToDeclined(result.Error!, _paymentsRepository);
+        await createdPayment.UpdateToDeclined(result.Error!, _paymentsRepository, cancellationToken);
         return UseCaseResult<Payment>.Rejected(result.Error!);
     }
 

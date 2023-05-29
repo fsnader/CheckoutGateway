@@ -82,7 +82,7 @@ public class PaymentsController : BaseController
     public async Task<IActionResult> CreatePaymentAsync([FromBody]CreatePaymentDto payment, CancellationToken cancellationToken)
     {
         var result = await _createPayment.ExecuteAsync(
-            payment.ConvertToPayment(Guid.Empty), 
+            payment.ConvertToPayment(Guid.Parse("65813c39-48f3-408a-9404-63bb0525a56c")), 
             cancellationToken);
         
         return UseCaseActionResult(result, PaymentDto.CreateFromPayment);
