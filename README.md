@@ -45,7 +45,7 @@ To use the received token on Swagger, it's necessary to copy the received token,
 The application consists on three main API endpoints:
 - `POST /api/payments`: Receives a payment request (containing the amount, currency and credit card details), validates it, sends it to the payment gateway and keeps the database updated accordingly.
 - `GET /api/payments`: List all payments for a specific merchant.
-- `GET /api/payments/{id}`: Retrieves a specific payment by its id. It only returns the payment if its from the merchant that is performing the request.
+- `GET /api/payments/{id}`: Retrieves a specific payment by its id. It only returns the payment if its from the merchant that is performing the request and masks sensitive information.
 
 ## Architecture
 
@@ -101,4 +101,13 @@ This layer also includes DTOs that are the API contracts. These contracts usuall
 ## Unit Tests
 TODO
 
+## Extras
+- List payments endpoint
+- Merchant signup and authentication
+- Unit tests
+
 ## Possible Improvements
+- Change bank communication to async with callback webhook
+- Include Polly to handle retries
+- Include payment history table to keep track of payment updates
+- Include timestamp on the payments table
