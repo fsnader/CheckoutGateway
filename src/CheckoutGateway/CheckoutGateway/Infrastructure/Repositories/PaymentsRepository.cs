@@ -34,9 +34,23 @@ public class PaymentsRepository : IPaymentsRepository
             return result.FirstOrDefault()!;
         }, cancellationToken);
 
-    public async Task UpdatePaymentAsync(Payment createdPayment, string reason, CancellationToken cancellationToken)
-    {
-    }
+    public async Task UpdatePaymentAsync(Payment payment, string reason, CancellationToken cancellationToken) =>
+        await _queryExecutor.ExecuteQueryAsync(async connection => await connection.ExecuteAsync(PaymentQueries.UpdateById,
+            new
+            {
+                payment.Id,
+                payment.BankExternalId,
+                payment.MerchantId,
+                payment.Amount,
+                payment.Currency,
+                Status = payment.Status.ToString(),
+                CardName = payment.Card.Name,
+                CardNumber = payment.Card.Number,
+                CardScheme = payment.Card.Scheme,
+                CardExpirationMonth = payment.Card.ExpirationMonth,
+                CardExpirationYear = payment.Card.ExpirationYear,
+                CardCvv = payment.Card.Cvv
+            }), cancellationToken);
 
     public async Task<Payment?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
         await _queryExecutor.ExecuteQueryAsync(async connection =>

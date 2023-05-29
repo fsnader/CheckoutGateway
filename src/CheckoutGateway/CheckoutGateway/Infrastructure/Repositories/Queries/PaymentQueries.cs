@@ -40,6 +40,22 @@ public static class PaymentQueries
             card_cvv as cvv;
 ";
 
+    public const string UpdateById = @"
+        UPDATE payment SET
+            merchant_id = @MerchantId, 
+            bank_external_id = @BankExternalId,
+            amount = @Amount, 
+            currency = @Currency, 
+            status = @Status::payment_status, 
+            card_name = @CardName, 
+            card_number = @CardNumber, 
+            card_scheme = @CardScheme, 
+            card_expiration_month = @CardExpirationMonth, 
+            card_expiration_year = @CardExpirationYear, 
+            card_cvv = @CardCvv
+        WHERE id = @Id;
+";
+
     public const string GetById = @"
         SELECT
             id, 
