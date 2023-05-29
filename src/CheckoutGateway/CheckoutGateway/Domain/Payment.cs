@@ -1,4 +1,4 @@
-using CheckoutGateway.Infrastructure.Repositories.Abstractions;
+using CheckoutGateway.Domain.Abstractions;
 
 namespace CheckoutGateway.Domain;
 

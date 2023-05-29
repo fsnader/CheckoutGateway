@@ -1,4 +1,5 @@
 using CheckoutGateway.Application.UseCases.Merchants;
+using CheckoutGateway.Application.UseCases.Merchants.Abstractions;
 using CheckoutGateway.WebApi.Authentication;
 using CheckoutGateway.WebApi.DTOs;
 using Microsoft.AspNetCore.Authorization;

@@ -1,7 +1,7 @@
 using CheckoutGateway.Application.UseCases.OutputPorts;
 using CheckoutGateway.Domain;
 
-namespace CheckoutGateway.Application.UseCases.Merchants;
+namespace CheckoutGateway.Application.UseCases.Merchants.Abstractions;
 
 public interface ICreateMerchant
 {

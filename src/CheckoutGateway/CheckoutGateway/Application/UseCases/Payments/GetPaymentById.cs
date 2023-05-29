@@ -1,7 +1,7 @@
 using CheckoutGateway.Application.UseCases.OutputPorts;
 using CheckoutGateway.Application.UseCases.Payments.Abstractions;
 using CheckoutGateway.Domain;
-using CheckoutGateway.Infrastructure.Repositories.Abstractions;
+using CheckoutGateway.Domain.Abstractions;
 
 namespace CheckoutGateway.Application.UseCases.Payments;
 

@@ -1,6 +1,6 @@
 using CheckoutGateway.Domain;
+using CheckoutGateway.Domain.Abstractions;
 using CheckoutGateway.Infrastructure.Database.Abstractions;
-using CheckoutGateway.Infrastructure.Repositories.Abstractions;
 using CheckoutGateway.Infrastructure.Repositories.Queries;
 using Dapper;
 

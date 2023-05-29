@@ -1,4 +1,5 @@
 using CheckoutGateway.Application.UseCases.Merchants;
+using CheckoutGateway.Application.UseCases.Merchants.Abstractions;
 using CheckoutGateway.Application.UseCases.Payments;
 using CheckoutGateway.Application.UseCases.Payments.Abstractions;
 

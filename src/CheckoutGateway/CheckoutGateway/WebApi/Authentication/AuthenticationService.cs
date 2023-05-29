@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using CheckoutGateway.Infrastructure.Repositories.Abstractions;
+using CheckoutGateway.Domain.Abstractions;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CheckoutGateway.WebApi.Authentication;

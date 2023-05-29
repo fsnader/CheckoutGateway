@@ -1,6 +1,7 @@
+using CheckoutGateway.Application.UseCases.Merchants.Abstractions;
 using CheckoutGateway.Application.UseCases.OutputPorts;
 using CheckoutGateway.Domain;
-using CheckoutGateway.Infrastructure.Repositories.Abstractions;
+using CheckoutGateway.Domain.Abstractions;
 
 namespace CheckoutGateway.Application.UseCases.Merchants;
 

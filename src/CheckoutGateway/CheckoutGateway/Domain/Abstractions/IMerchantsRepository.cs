@@ -1,6 +1,4 @@
-using CheckoutGateway.Domain;
-
-namespace CheckoutGateway.Infrastructure.Repositories.Abstractions;
+namespace CheckoutGateway.Domain.Abstractions;
 
 public interface IMerchantsRepository
 {
