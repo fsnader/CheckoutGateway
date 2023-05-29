@@ -21,8 +21,6 @@ public class GetPaymentById : IGetPaymentById
             return UseCaseResult<Payment>.NotFound("Payment not found");
         }
         
-        // TODO: What about credit card ?
-
         return UseCaseResult<Payment>.Success(payment);
     }
 }
