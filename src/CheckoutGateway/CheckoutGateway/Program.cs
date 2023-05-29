@@ -1,15 +1,21 @@
 using System.Reflection;
+using System.Text;
 using System.Text.Json.Serialization;
 using CheckoutGateway.Api.Middlewares;
 using CheckoutGateway.Application.UseCases;
 using CheckoutGateway.Infrastructure.Database;
 using CheckoutGateway.Infrastructure.Gateways;
 using CheckoutGateway.Infrastructure.Repositories;
+using CheckoutGateway.WebApi.Authentication;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
     .AddScoped<GlobalExceptionsMiddleware>()
+    .AddAuthenticationServices()
     .AddGateways()
     .AddDatabase()
     .AddRepositories()
@@ -32,9 +38,30 @@ builder.Services
 builder.Services
     .AddSwaggerGen(options =>
     {
+        options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey
+        });
+
+        options.OperationFilter<SecurityRequirementsOperationFilter>();
+        
         var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
         options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     });
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateAudience = false,
+        ValidateIssuer = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            builder.Configuration.GetSection("AppSettings:Token").Value!))
+    };
+});
 
 var app = builder.Build();
 

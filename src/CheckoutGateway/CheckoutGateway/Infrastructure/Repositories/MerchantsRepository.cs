@@ -22,9 +22,9 @@ public class MerchantsRepository : IMerchantsRepository
                 merchant.SecretId
             }), cancellationToken);
 
-    public Task<Merchant> GetByClientId(string clientId, CancellationToken cancellationToken) =>
+    public Task<Merchant?> GetByClientId(string clientId, CancellationToken cancellationToken) =>
         _queryExecutor.ExecuteQueryAsync(connection =>
-                connection.QueryFirstOrDefaultAsync<Merchant>(
+                connection.QueryFirstOrDefaultAsync<Merchant?>(
                     MerchantQueries.GetById,
                     new { ClientId = clientId }),
             cancellationToken);

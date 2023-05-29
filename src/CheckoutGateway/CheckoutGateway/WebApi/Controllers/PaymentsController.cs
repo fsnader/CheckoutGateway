@@ -1,10 +1,11 @@
 using CheckoutGateway.Application.UseCases.Payments.Abstractions;
 using CheckoutGateway.WebApi.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CheckoutGateway.WebApi.Controllers;
 
-[Route("api/payments")]
+[Route("api/payments"), Authorize]
 [ApiController]
 public class PaymentsController : BaseController
 {
@@ -21,8 +22,7 @@ public class PaymentsController : BaseController
         _getPaymentsList = getPaymentsList;
         _createPayment = createPayment;
     }
-
-
+    
     /// <summary>
     /// Returns a Payment by UUID
     /// </summary>
