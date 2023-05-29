@@ -5,23 +5,23 @@ namespace CheckoutGateway.Infrastructure.Repositories;
 
 public class PaymentsRepository : IPaymentsRepository
 {
-    public Task<Payment> CreateAsync(Payment payment)
+    public async Task<Payment> CreateAsync(Payment payment)
     {
-        throw new NotImplementedException();
+        return payment;
     }
 
-    public Task UpdatePaymentAsync(Payment createdPayment, string reason)
+    public async Task UpdatePaymentAsync(Payment createdPayment, string reason)
     {
-        throw new NotImplementedException();
+        
     }
 
-    public Task<Payment?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<Payment?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return null;
     }
 
-    public Task<IEnumerable<Payment>> ListByMerchantIdAsync(Guid merchantId, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Payment>> ListByMerchantIdAsync(Guid merchantId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Array.Empty<Payment>();
     }
 }
