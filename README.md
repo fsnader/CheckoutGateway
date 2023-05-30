@@ -123,9 +123,12 @@ To do a real cloud deployment, we could use the following services:
 - Application: Use Amazon EKS to deploy a managed Kubernetes cluster and deploy the application on it in a scalable way
 
 ## Possible Improvements/Refactors
-There are some other aspects that should be considered for a real implementation of a payment gateway. 
+There are some other aspects that could be considered for a real implementation of a payment gateway, and that hadn't been considered on this project to keep things simple.
 
-### Include Polly to handle gateway retries
+### Integration Tests
+An import testing strategy for this project would be to test the whole API flow, to ensure that all infrastructure implementations (databases, APIs, gateways) are working properly.
+
+### Include Polly to handle retries
 In a HTTP integration with the bank, we could include Polly to implement some retry and circuit breaker strategies. This would ensure that temporary network or service problems would affect customers less.
 
 ### Include payment history table to keep track of payment updates
