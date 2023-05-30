@@ -99,17 +99,19 @@ For this project, Dapper is being used to access the database. This MicroORM inc
 ##### Repositories
 Includes the repositories implementations to access Merchant and Payment entities.
 
-![img.png](docs/infrastructure.png?raw=true)
+![Infrastructure Layer](docs/infrastructure.png?raw=true)
 
 #### WebApi
 This is the layer that keeps the implementation details of the presentation layer (API Controllers) of our app, and components that only make sense on this layer (Authentication and Middlewares).
 
 This layer also includes DTOs that are the API contracts. These contracts usually differ from the domain because they are use case specific and hide sensitive domain information from the end user.
 
-![img_1.png](docs/webapi.png?raw=true)
+![WebApi layer](docs/webapi.png?raw=true)
 
 ## Unit Tests
 The CheckoutGateway.UnitTests project contains a suite of unit tests for testing the individual components of the API. These tests are designed to test the logic of the code in isolation, without relying on external dependencies. The tests are written using xUnit and can be run from Visual Studio or using the command line.
+
+![unit tests.png](docs/unit-tests.png?raw=true)
 
 ## Extras
 - List payments endpoint
