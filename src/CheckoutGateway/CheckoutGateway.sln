@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFi
 		..\..\README.md = ..\..\README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckoutGateway.UnitTests", "CheckoutGateway.UnitTests\CheckoutGateway.UnitTests.csproj", "{1D968792-5FDC-418B-B0F4-D85F84D6248F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,5 +19,9 @@ Global
 		{3C0CAB7A-7B79-442C-B553-B5CFB2EC5B4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C0CAB7A-7B79-442C-B553-B5CFB2EC5B4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C0CAB7A-7B79-442C-B553-B5CFB2EC5B4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D968792-5FDC-418B-B0F4-D85F84D6248F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D968792-5FDC-418B-B0F4-D85F84D6248F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D968792-5FDC-418B-B0F4-D85F84D6248F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D968792-5FDC-418B-B0F4-D85F84D6248F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
