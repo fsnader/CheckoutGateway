@@ -13,7 +13,9 @@ public static class PaymentQueries
              card_scheme, 
              card_expiration_month, 
              card_expiration_year, 
-             card_cvv)
+             card_cvv,
+             created_at,
+             updated_at)
         VALUES
             (@MerchantId, 
              @Amount, 
@@ -24,7 +26,9 @@ public static class PaymentQueries
              @CardScheme, 
              @CardExpirationMonth, 
              @CardExpirationYear, 
-             @CardCvv)
+             @CardCvv,
+             @CreatedAt,
+             @UpdatedAt)
         RETURNING 
             id, 
             merchant_id,
@@ -32,6 +36,8 @@ public static class PaymentQueries
             amount, 
             currency, 
             status,
+            created_at,
+            updated_at,
             card_name as name, 
             card_number as number, 
             card_scheme as scheme,
@@ -52,7 +58,8 @@ public static class PaymentQueries
             card_scheme = @CardScheme, 
             card_expiration_month = @CardExpirationMonth, 
             card_expiration_year = @CardExpirationYear, 
-            card_cvv = @CardCvv
+            card_cvv = @CardCvv,
+            updated_at = @UpdatedAt
         WHERE id = @Id;
 ";
 
@@ -64,6 +71,8 @@ public static class PaymentQueries
             amount, 
             currency, 
             status,
+            created_at,
+            updated_at,
             card_name as name, 
             card_number as number, 
             card_scheme as scheme,
@@ -81,6 +90,8 @@ public static class PaymentQueries
             amount, 
             currency, 
             status,
+            created_at,
+            updated_at,
             card_name as name, 
             card_number as number, 
             card_scheme as scheme,

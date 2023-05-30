@@ -38,6 +38,16 @@ public class PaymentDto
     /// Card scheme: Visa, Mastercard, Amex, etc
     /// </summary>
     public string CardScheme { get; set; }
+    
+    /// <summary>
+    /// Payment Created datetime
+    /// </summary>
+    public DateTimeOffset CreatedAt { get; set; }
+    
+    /// <summary>
+    /// Payment Updated datetime
+    /// </summary>
+    public DateTimeOffset UpdatedAt { get; set; }
 
     public static PaymentDto CreateFromPayment(Payment payment) =>
         new()
@@ -48,7 +58,9 @@ public class PaymentDto
             Currency = payment.Currency,
             Status = payment.Status,
             CardLastFourDigits = payment.Card.LastFourDigits,
-            CardScheme = payment.Card.Scheme
+            CardScheme = payment.Card.Scheme,
+            CreatedAt = payment.CreatedAt,
+            UpdatedAt = payment.UpdatedAt
         };
 
     public static IEnumerable<PaymentDto> CreateFromCollection(IEnumerable<Payment> payments) =>

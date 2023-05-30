@@ -15,6 +15,7 @@ public class PaymentsRepository : IPaymentsRepository
     public async Task<Payment> CreateAsync(Payment payment, CancellationToken cancellationToken) =>
         await _queryExecutor.ExecuteQueryAsync(async connection =>
         {
+            payment.UpdatedAt = payment.CreatedAt = DateTimeOffset.UtcNow;
             var result = await connection.QueryAsync<Payment, CreditCard, Payment>(PaymentQueries.Create,
                 MapPaymentAndCreditCard,
                 new
@@ -28,7 +29,9 @@ public class PaymentsRepository : IPaymentsRepository
                     CardScheme = payment.Card.Scheme,
                     CardExpirationMonth = payment.Card.ExpirationMonth,
                     CardExpirationYear = payment.Card.ExpirationYear,
-                    CardCvv = payment.Card.Cvv
+                    CardCvv = payment.Card.Cvv,
+                    payment.CreatedAt,
+                    payment.UpdatedAt
                 }, splitOn: "name");
 
             return result.FirstOrDefault()!;
@@ -49,7 +52,8 @@ public class PaymentsRepository : IPaymentsRepository
                 CardScheme = payment.Card.Scheme,
                 CardExpirationMonth = payment.Card.ExpirationMonth,
                 CardExpirationYear = payment.Card.ExpirationYear,
-                CardCvv = payment.Card.Cvv
+                CardCvv = payment.Card.Cvv,
+                UpdatedAt = DateTimeOffset.UtcNow
             }), cancellationToken);
 
     public async Task<Payment?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>

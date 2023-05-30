@@ -30,6 +30,8 @@ CREATE TABLE payment
     card_expiration_month integer NOT NULL,
     card_expiration_year  integer NOT NULL,
     card_cvv              integer NOT NULL,
+    created_at            timestamp WITH TIME ZONE,
+    updated_at            timestamp WITH TIME ZONE,
     CONSTRAINT fk_payment_merchant FOREIGN KEY (merchant_id) REFERENCES merchant (id)
 );
 
