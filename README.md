@@ -125,6 +125,9 @@ To do a real cloud deployment, we could use the following services:
 ## Possible Improvements / refactors
 There are some other aspects that could be considered for a real implementation of a payment gateway, and that hadn't been considered on this project to keep things simple.
 
+### Secret IDs cryptography
+The secret ids should be saved in the database using asymmetric cryptography. This would ensure that even if the database is exploited, login information wouldn't be exposed.
+
 ### Integration Tests
 An import testing strategy for this project would be to test the whole API flow, to ensure that all infrastructure implementations (databases, APIs, gateways) are working properly.
 
