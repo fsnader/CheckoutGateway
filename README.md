@@ -109,7 +109,7 @@ This layer also includes DTOs that are the API contracts. These contracts usuall
 ![img_1.png](docs/webapi.png?raw=true)
 
 ## Unit Tests
-TODO
+The CheckoutGateway.UnitTests project contains a suite of unit tests for testing the individual components of the API. These tests are designed to test the logic of the code in isolation, without relying on external dependencies. The tests are written using xUnit and can be run from Visual Studio or using the command line.
 
 ## Extras
 - List payments endpoint
