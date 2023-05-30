@@ -10,9 +10,9 @@ public class Payment
     public decimal Amount { get; set; }
     public string Currency { get; set; }
     public PaymentStatus Status { get; set; }
-    public CreditCard Card { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
+    public CreditCard Card { get; set; }
 
     private async Task UpdateStatus(PaymentStatus status, string reason, IPaymentsRepository repository, CancellationToken cancellationToken)
     {
