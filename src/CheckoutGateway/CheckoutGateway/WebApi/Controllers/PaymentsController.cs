@@ -71,17 +71,17 @@ public class PaymentsController : BaseController
     /// 
     ///     POST /api/payments=
     ///     {
-    ///         "amount": 550,
+    ///         "amount": 200.31,
     ///         "currency": "USD",
     ///         "card": {
-    ///             "name": "Felipe Nader",
-    ///             "number": "4141414141414141",
+    ///             "name": "Test Test",
+    ///             "number": "4111111111111111",
     ///             "scheme": "VISA",
-    ///             "expirationMonth": 11,
+    ///             "expirationMonth": 12,
     ///             "expirationYear": 2025,
     ///             "cvv": 999
-    ///         }
     ///     }
+    /// }
     /// 
     /// </remarks>
     /// <response code="200">Processed payment response</response>
