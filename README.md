@@ -34,8 +34,6 @@ dotnet run
 
 ![swagger](docs/swagger.png?raw=true)
 
-[//]: # ( TODO: To run the integration tests, make sure the containers are running and then execute the tests using Visual Studio or the command line. Please note that the integration tests will create, update, and delete data from the database, so it's recommended to use a test database or reset the container after running the tests.)
-
 ### Authentication
 
 Authentication is required for all endpoints except for the POST /api/auth/signup and POST /api/auth/login endpoints.
@@ -89,7 +87,8 @@ Validators: FluentValidation input validators
 This is the layer that keeps the implementation details of the domain abstractions. In this application, mostly of this is related to data access (repositories) and external integrations (gateways).
 
 ##### Gateways
-Includes the BankGateway implementation. This class emulates the connection between the gateway and the Bank. For this project, we're using just a mock class that returns dummy results, but for a real project, it probably would implement a service integration through queues, REST APIs, GRPc, or any other communication protocol.
+Includes the BankGateway implementation. This mock class emulates the connection between the gateway and the Bank and return random results.
+For a real project, it probably would implement a service integration through queues, REST APIs, GRPc, or any other communication protocol.
 
 ##### Database
 Includes abstractions and classes related to Postgres data access. 
@@ -118,8 +117,41 @@ The CheckoutGateway.UnitTests project contains a suite of unit tests for testing
 - Merchant signup and authentication
 - Unit tests
 
-## Possible Improvements
-- Change bank communication to async with callback webhook
-- Include Polly to handle retries
-- Include payment history table to keep track of payment updates
-- Include timestamp on the payments table
+## Cloud Deployment
+To do a real cloud deployment, we could use the following services:
+- Database: Use Amazon RDS to deploy a managed PostgreSQL instance
+- Application: Use Amazon EKS to deploy a managed Kubernetes cluster and deploy the application on it in a scalable way
+
+## Possible Improvements/Refactors
+There are some other aspects that should be considered for a real implementation of a payment gateway. 
+
+### Include Polly to handle gateway retries
+In a HTTP integration with the bank, we could include Polly to implement some retry and circuit breaker strategies. This would ensure that temporary network or service problems would affect customers less.
+
+### Include payment history table to keep track of payment updates
+It would be interesting to keep some sort of event tracking table containing all the payment status updates.
+This would give more visibility of aspects like when the payment had been created, when it got accepted, when it got finished, etc...
+
+### Bank Gateway Request / Response flow
+The current implementation assumes that the CreatePayment request will return the final result of the payment synchronously, like the following sequence diagram:
+![actual-flow](docs/actual-gateway-flow.png?raw=true)
+
+Instead of following this synchronous flow, the gateway processing could be done asynchronous:
+1. Our gateway sends a request to the bank with the payment information
+2. The bank does a quick fail fast validation to ensure the input is valid. If is, the bank returns a 202 Accepted result confirming that the payment will be processed.
+3. When the bank updates the transaction (accepting, rejecting, etc) it notifies our gateway in a webhook
+4. This webhook than updates our database accordingly and notify subscribed customers
+
+![async pt1](docs/async-flow-pt1.png?raw=true)
+![async pt2](docs/async-flow-pt2.png?raw=true)
+
+This option has some advantages:
+- The customer doesn't have to wait the whole payment processing on the same HTTP request, what improves the user experience
+- In case of any failures on the gateway or bank processing, we can retry a few times before rejecting the transaction, what improves the reliability of our system
+
+But it also brings some disadvantages:
+- The architecture is much more complex and has a lot of moving parts
+- The development, monitoring and maintenance efforts are higher
+- Handling real time notifications can bring other technical and UX challenges
+
+Because of that, it would be important to evaluate the trade-offs before following this architecture.
