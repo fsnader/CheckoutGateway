@@ -3,6 +3,9 @@ using CheckoutGateway.Domain.Abstractions;
 
 namespace CheckoutGateway.Infrastructure.Gateways;
 
+/// <summary>
+/// CKO bank simulator
+/// </summary>
 public class BankGateway : IBankGateway
 {
     private readonly Random _random;
